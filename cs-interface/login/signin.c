@@ -5,17 +5,18 @@
 #include <cJSON.h>
 #include <sys/socket.h>
 #include <string.h>
+#include <z3.h>
 
-cJSON * PRE_STRUCTURE(char *command) {
-    cJSON * CLIENT = cJSON_CreateObject();
+cJSON *PRE_STRUCTURE(char *command) {
+    cJSON *CLIENT = cJSON_CreateObject();
     cJSON_AddItemToObject(CLIENT, "command", cJSON_CreateString(command));
     printf("%s\n", cJSON_Print(CLIENT));
     return CLIENT;
 }
 
-cJSON * SIGNIN_FROM_CLIENT_TO_SERVER(char * account_name, char * password) {
-    cJSON * package = cJSON_CreateObject();
-    cJSON * CONTENT = cJSON_CreateObject();
+cJSON *SIGNIN_FROM_CLIENT_TO_SERVER(char *account_name, char *password) {
+    cJSON *package = cJSON_CreateObject();
+    cJSON *CONTENT = cJSON_CreateObject();
     package = PRE_STRUCTURE("login");
     cJSON_AddItemToObject(package, "content", CONTENT);
     cJSON_AddItemToObject(CONTENT, "username", cJSON_CreateString(account_name));
@@ -23,19 +24,16 @@ cJSON * SIGNIN_FROM_CLIENT_TO_SERVER(char * account_name, char * password) {
     return package;
 }
 
-bool SIGNIN_FROM_SERVER_TO_CLIENT(char * SIGNAL) {
+bool SIGNIN_FROM_SERVER_TO_CLIENT(char *SIGNAL) {
     if (strcmp(SIGNAL, "SUCCEEDED_SIGNIN")) {
         return true;
     }
     return false;
 }
 
-int sockfd = -1;
-int sendret = 0;
-int recret = 0;
-bool SIGN_WHOLE_PROCESS(char * account_name, char * password) {
+bool SIGN_WHOLE_PROCESS(char *account_name, char *password) {
     char SIGNAL_BUFFER[20] = {'\0'};
-    cJSON * DIRECT_PACKAGE = SIGNIN_FROM_CLIENT_TO_SERVER(account_name, password);
+    cJSON *DIRECT_PACKAGE = SIGNIN_FROM_CLIENT_TO_SERVER(account_name, password);
     send(sockfd, cJSON_PrintUnformatted(DIRECT_PACKAGE), strlen(cJSON_PrintUnformatted(DIRECT_PACKAGE)), 0);
     recret = recv(sockfd, SIGNAL_BUFFER, sizeof(SIGNAL_BUFFER), 0);
     if (recret == 0) {

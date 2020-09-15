@@ -8,11 +8,8 @@
 #include <string.h>
 #include <sys/socket.h>
 
-int sockfd = -1;
-int sendret = 0;
-int recret = 0;
 
-cJSON * SAVE_DRAFT_CLIENT_TO_SERVER(char * account_name, cJSON * PACKAGE_FROM_UI) {
+cJSON *SAVE_DRAFT_CLIENT_TO_SERVER(char *account_name, cJSON *PACKAGE_FROM_UI) {
     /*
      * PACKAGE_FROM_UI: {   recipient: "str"
      *                      title: "str"
@@ -24,7 +21,7 @@ cJSON * SAVE_DRAFT_CLIENT_TO_SERVER(char * account_name, cJSON * PACKAGE_FROM_UI
      * Formatted the package and send it to SERVER
      * the key is the defined data structure
      */
-    cJSON * PACKAGE_FROM_CLIENT = cJSON_CreateObject();
+    cJSON *PACKAGE_FROM_CLIENT = cJSON_CreateObject();
     cJSON_AddItemToObject(PACKAGE_FROM_CLIENT, "command", cJSON_CreateString("SendMail"));
     cJSON_AddItemToObject(PACKAGE_FROM_CLIENT, "content", PACKAGE_FROM_UI);
     return PACKAGE_FROM_CLIENT;
@@ -35,15 +32,16 @@ cJSON * SAVE_DRAFT_CLIENT_TO_SERVER(char * account_name, cJSON * PACKAGE_FROM_UI
  * So save the account (sender) as a global para
  * deliver this into the function
  */
-bool AVE_DRAFT_BUTTON_CLICKED(char * username, char * title, char * body) {  // API for the UI
+bool AVE_DRAFT_BUTTON_CLICKED(char *username, char *title, char *body) {  // API for the UI
 
     /*
      * Here is the space for the cJSON packing process
      * (UI) will pack it
      */
     //// global parameter -- account name
-    cJSON * result = cJSON_CreateObject();
-    cJSON * package = cJSON_CreateObject();
+    char account_name[] = {""};
+    cJSON *result = cJSON_CreateObject();
+    cJSON *package = cJSON_CreateObject();
     package = SAVE_DRAFT_CLIENT_TO_SERVER(account_name, result);
 
     char SAVE_DRAFT_BUFFER[100] = {'\0'};
@@ -59,11 +57,11 @@ bool AVE_DRAFT_BUTTON_CLICKED(char * username, char * title, char * body) {  // 
          *
          */
         return true;
-    }
-    else {
-
+    } else {
         memset(SAVE_DRAFT_BUFFER, '\0', sizeof(SAVE_DRAFT_BUFFER));
-
+        /*
+         *
+         */
         return false;
     }
 }

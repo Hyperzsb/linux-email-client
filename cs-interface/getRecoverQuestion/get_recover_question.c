@@ -1,17 +1,13 @@
 //
 // Created by guangtao on 2020/9/14.
 //
-
+#include <stdio.h>
 #include <cJSON.h>
 #include <string.h>
 #include <sys/socket.h>
 
-int sockfd = -1;
-int sendret = 0;
-int recret = 0;
-
-cJSON * PRE_STRUCTURE(char *command) {
-    cJSON * CLIENT = cJSON_CreateObject();
+cJSON *PRE_STRUCTURE(char *command) {
+    cJSON *CLIENT = cJSON_CreateObject();
     cJSON_AddItemToObject(CLIENT, "command", cJSON_CreateString(command));
     printf("%s\n", cJSON_Print(CLIENT));
     return CLIENT;
@@ -31,9 +27,10 @@ cJSON * PRE_STRUCTURE(char *command) {
  */
 
 char ERROR[] = {"Get recover name failed!\n"};
-char * GET_RECOVER_NAME(char * account_name) {
-    cJSON * package = PRE_STRUCTURE("get_recover_question");
-    cJSON * CONTENT = cJSON_CreateObject();
+
+char *GET_RECOVER_QUESTION(char *account_name, char *security_question) {
+    cJSON *package = PRE_STRUCTURE("get_recover_question");
+    cJSON *CONTENT = cJSON_CreateObject();
     cJSON_AddItemToObject(package, "content", CONTENT);
     cJSON_AddItemToObject(CONTENT, "account_name", cJSON_CreateString(account_name));
 
@@ -44,9 +41,18 @@ char * GET_RECOVER_NAME(char * account_name) {
         return ERROR;
     }
     if (strcmp(GRN_BUFFER, "SUCCEEDED_GET_QU") == 0) {
+        /*
+         * IF CONNECTED AND FOUND THE USER
+         * RETURN THE USER'S SEQ-QUESTION AND ITS ANSWER
+         * IF NOT
+         * RETURN ERROR
+         */
+        memset(security_question, '\0', sizeof(security_question));
+        strcat(security_question, GRN_BUFFER);
+        memset(GRN_BUFFER, '\0', sizeof(GRN_BUFFER));
+        recret = recv(sockfd, GRN_BUFFER, sizeof(GRN_BUFFER), 0);
         return GRN_BUFFER;
-    }
-    else {
+    } else {
         return ERROR;
     }
 }

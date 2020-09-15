@@ -3,18 +3,13 @@
 //
 #include <cJSON.h>
 #include <string.h>
+#include <stdio.h>
+
 #define bool int
 #define true 1
 #define false 0
 
-bool * SENDER_UI_DATA_SUBMIT_BUTTON_CLICKED(cJSON * PACKAGE_FROM_UI) {
-
-
-
-    return
-}
-
-cJSON * SENDER_CLIENT_TO_SERVER(char * account_name, cJSON * PACKAGE_FROM_UI) {
+cJSON *SENDER_CLIENT_TO_SERVER(char *account_name, cJSON *PACKAGE_FROM_UI) {
     /*
      * PACKAGE_FROM_UI: {   recipient: "str"
      *                      title: "str"
@@ -26,7 +21,7 @@ cJSON * SENDER_CLIENT_TO_SERVER(char * account_name, cJSON * PACKAGE_FROM_UI) {
      * Formatted the package and send it to SERVER
      * the key is the defined data structure
      */
-    cJSON * PACKAGE_FROM_CLIENT = cJSON_CreateObject();
+    cJSON *PACKAGE_FROM_CLIENT = cJSON_CreateObject();
     cJSON_AddItemToObject(PACKAGE_FROM_CLIENT, "command", cJSON_CreateString("SendMail"));
     cJSON_AddItemToObject(PACKAGE_FROM_CLIENT, "content", PACKAGE_FROM_UI);
     return PACKAGE_FROM_CLIENT;
@@ -38,7 +33,7 @@ cJSON * SENDER_CLIENT_TO_SERVER(char * account_name, cJSON * PACKAGE_FROM_UI) {
  * if succeeded, goto the SENDER_CLIENT_TO_UI function
  */
 
-bool SENDER_CLIENT_TO_UI(char * SIGNAL_FROM_SERVER) {
+bool SENDER_CLIENT_TO_UI(char *SIGNAL_FROM_SERVER) {
     if (strcmp(SIGNAL_FROM_SERVER, "SendMail_Succeed")) {
         // if (POPUP_FOR_GROUP_SENDING) {
         //
@@ -46,4 +41,20 @@ bool SENDER_CLIENT_TO_UI(char * SIGNAL_FROM_SERVER) {
         return true;
     }
     return false;
+}
+
+void SENDER_UI_DATA_SUBMIT_BUTTON_CLICKED(cJSON *PACKAGE_FROM_UI_t) {
+
+    char account_name[] = {"test_account"};
+    cJSON * PACKAGE_FROM_CLIENT = cJSON_CreateObject();
+    PACKAGE_FROM_CLIENT = SENDER_CLIENT_TO_SERVER(account_name, PACKAGE_FROM_UI_t);
+    /*
+     * sending
+     */
+    char SIGNAL[] = {"SendMail_Succeed"};
+    if (SENDER_CLIENT_TO_UI(SIGNAL)) {
+        printf("send succeeded\n");
+    } else {
+        printf("failed\n");
+    }
 }

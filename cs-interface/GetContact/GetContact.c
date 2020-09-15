@@ -7,7 +7,3 @@
 #include <z3.h>
 #include <string.h>
 #include <sys/socket.h>
-
-int sockfd = -1;
-int sendret = 0;
-int recret = 0;
