@@ -46,7 +46,7 @@ bool SENDER_CLIENT_TO_UI(char *SIGNAL_FROM_SERVER) {
 void SENDER_UI_DATA_SUBMIT_BUTTON_CLICKED(cJSON *PACKAGE_FROM_UI_t) {
 
     char account_name[] = {"test_account"};
-    cJSON * PACKAGE_FROM_CLIENT = cJSON_CreateObject();
+    cJSON *PACKAGE_FROM_CLIENT = cJSON_CreateObject();
     PACKAGE_FROM_CLIENT = SENDER_CLIENT_TO_SERVER(account_name, PACKAGE_FROM_UI_t);
     /*
      * sending

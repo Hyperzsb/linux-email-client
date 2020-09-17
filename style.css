@@ -1,0 +1,40 @@
+button
+{
+    background-image: url('bgbu.jpg');
+
+    font-family:Sans;
+    font-size:30px;
+    font-weight:500;
+    border:           2px solid #f9eca4;
+}
+
+
+window
+{
+    background-image: url('111.jpg');
+    background-size:100% 100%;
+    background-repeat:no-repeat;
+    border:           2px solid black;
+}
+
+entry
+{
+    background-image: url('bgbu.jpg');
+    border: 2px solid #f9eca4;
+    color:#f9eca4;
+}
+
+label
+{
+    color:#f9eca4;
+   
+}
+
+textview
+{
+    
+ background-image: url('bgbu.jpg');
+    border: 2px solid #f9eca4;
+    color:#f9eca4;
+}
+
