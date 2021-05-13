@@ -6,9 +6,20 @@
 
 *Course project for Basic Practice of Computer Science, BIT 2020.*
 
-## Overview
+## Table of Contents
+
+- [Declaration](https://github.com/Hyperzsb/linux-email-client#declaration)
+- [Overview](https://github.com/Hyperzsb/linux-email-client#overview)
+- [What's Next](https://github.com/Hyperzsb/linux-email-client#whats-next)
+- [License](https://github.com/Hyperzsb/linux-email-client#License)
+
+## Declaration
 
 **THIS PROGRAM IS NOT INTEGRATED YET! THERE ARE JUST SOURCE CODES!**
+
+**This project was developed by me.**
+
+## Overview
 
 This **client-side** program currently includes features as follows:
 
@@ -37,4 +48,8 @@ There are several features needed to add as follows:
   - Accessory support
   - Carbon copy
   - Delete emails (Trash bin)
+
+## License
+
+This project is under [MIT License](https://github.com/Hyperzsb/linux-email-client/blob/master/LICENSE).
 
