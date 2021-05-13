@@ -17,7 +17,7 @@
 
 **THIS PROGRAM IS NOT INTEGRATED YET! THERE ARE JUST SOURCE CODES!**
 
-**This project was developed by me.**
+**This project was developed by my teammate, not me.**
 
 ## Overview
 
